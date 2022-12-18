@@ -907,9 +907,16 @@ public class Program
                                         {-3, -4, -50, -24, -5}, 
                                         {34, 2, -3, 6, 5},
                                         {44, 52, -63, 4, 9}};
-        
-        double[] q = new double[m_a5_5v];
-        
+        double[] q1;
+        if (m_a5_5v / 2 * 2 != m_a5_5v)
+        {
+            q1 = new double[m_a5_5v / 2 + 1];
+        }
+        else
+        {
+            q1 = new double[m_a5_5v / 2];
+        }
+        double[] q2 = new double[m_a5_5v / 2];
 
         for (int i = 0; i < n_a5_5v; i++)
         {
@@ -920,31 +927,37 @@ public class Program
             Console.WriteLine("");
         }
         Console.WriteLine("");
+        
+        
         for (int i = 0; i < n_a5_5v; i++)
         {
             for (int k = 0; k < m_a5_5v; k++)
             {
-                q[k] = a5_5v[i, k];
+                if (k / 2 * 2 == k)
+                {
+                    q1[k / 2] = a5_5v[i, k];
+                }
+                else
+                {
+                    q2[k / 2] = a5_5v[i, k];
+                }
+            }
+            Array.Sort(q1);
+            Array.Sort(q2);
+            
+            for (int k = 0; k < m_a5_5v; k++)
+            {  
+                if (k / 2 * 2 == k)
+                {
+                    a5_5v[i, k] = q1[(m_a5_5v - k  - 1) / 2];
+                }
+                else
+                {
+                    a5_5v[i, k] = q2[(k / 2)];
+                }
+                
             }
             
-            Array.Sort(q);
-            if (m_a5_5v / 2 * 2 == 0)
-            {
-                for (int k = 0; k < m_a5_5v; k = k + 2)
-                {
-                    a5_5v[i, k] = q[m_a5_5v - k - 1];
-                    a5_5v[i, k + 1] = q[k + 1];
-                }
-            }
-            else
-            {
-                for (int k = 0; k < m_a5_5v - 1; k = k + 2)
-                {
-                    a5_5v[i, k] = q[m_a5_5v - k - 1];
-                    a5_5v[i, k + 1] = q[k + 1];
-                }
-                a5_5v[i, m_a5_5v - 1] = q[0];
-            }
         }
         
         
@@ -1033,7 +1046,7 @@ public class Program
         }
         
         
-        for (int i = 0; i < n_a4_4; i++)
+        for (int i = 0; i < n_a4_4 - len; i++)
         {
             for (int k = 0; k < m_a4_4; k++)
             {
